@@ -1,0 +1,12 @@
+{
+    "particle.firmwareVersion": "5.5.0",
+    "particle.targetPlatform": "p2",
+    "files.associations": {
+        "chrono": "cpp",
+        "new": "cpp",
+        "cstring": "cpp",
+        "algorithm": "cpp",
+        "iomanip": "cpp",
+        "cfloat": "cpp"
+    }
+}
