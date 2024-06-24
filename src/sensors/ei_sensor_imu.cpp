@@ -35,7 +35,7 @@ sampler_callback inertial_cb_sampler;
 bool ei_sensor_imu_init(void)
 {
     /* Init & configure sensor */
-    accel = new ADXL362DMA(SPI, A2 /* A2 */);
+    accel = new ADXL362DMA(SPI, D13 /* A2 */);
 
     accel->softReset();
     delay(100);
