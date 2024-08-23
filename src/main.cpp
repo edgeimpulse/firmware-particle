@@ -25,6 +25,7 @@
 #include "ei_microphone.h"
 #include "ei_run_impulse.h"
 
+SYSTEM_MODE(SEMI_AUTOMATIC);
 SYSTEM_THREAD(ENABLED);
 
 /* Constants --------------------------------------------------------------- */
