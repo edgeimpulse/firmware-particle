@@ -34,22 +34,31 @@ sampler_callback inertial_cb_sampler;
 
 bool ei_sensor_imu_init(void)
 {
+    const uint8_t status_timeout = 10;
+    uint8_t stat_read_count = 0;
+
     /* Init & configure sensor */
     accel = new ADXL362DMA(SPI, D13 /* A2 */);
 
     accel->softReset();
     delay(100);
-    while(accel->readStatus() == 0) {
+    while(accel->readStatus() == 0 && stat_read_count++ < status_timeout) {
         ei_printf("no status yet, waiting for accelerometer\r\n");
         ei_sleep(1000);
     }
 
-    accel->writeFilterControl(accel->RANGE_2G, false, false, accel->ODR_200);
-    accel->setMeasureMode(true);
+    if(stat_read_count >= status_timeout) {
+        ei_printf("Failed to read status from accelerometer\r\n");
+        return false;
+    }
+    else {
+        accel->writeFilterControl(accel->RANGE_2G, false, false, accel->ODR_200);
+        accel->setMeasureMode(true);
 
-    ei_add_sensor_to_fusion_list(imu_sensor);
+        ei_add_sensor_to_fusion_list(imu_sensor);
 
-    return true;
+        return true;
+    }
 }
 
 float *ei_sensor_imu_read_data(int n_samples)
